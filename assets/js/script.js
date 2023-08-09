@@ -2,6 +2,8 @@ var searchBTN = document.querySelector('#searchBTN');
 var searchInput = document.querySelector('#searchInput');
 var resultBody = document.querySelector('#searchBody');
 var modalBTNEl = document.querySelector(".modalBTN");
+var modal = document.querySelector('#streaming-modal');
+var addedInfo = ""
 
 function search(event) {
     event.preventDefault();
@@ -13,7 +15,7 @@ function search(event) {
             input[i] = '%20' + input[i];
         }
     }
-    var addedInfo = input.toString();
+     addedInfo = input.toString();
     mbdFetch(addedInfo)
 
 }
@@ -52,7 +54,7 @@ function mbdFetch(addedInfo) {
             // go through array and get data
             resultsArray.forEach(element => {
                 createElements(element);
-                searchstring(element);
+                // searchstring(element);
             });
 
         })
@@ -75,7 +77,7 @@ function searchstring(element) {
     var addedInfo = input.toString().replace(/\,/g, '');
     console.log(addedInfo)
 
-    streamingAvailabilityFetch(addedInfo);
+    // streamingAvailabilityFetch(addedInfo);
 
 }
 
@@ -88,7 +90,7 @@ function streamingAvailabilityFetch(addedInfo) {
     const options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': '57a746aabcmsh658867c83d6065ap1700c3jsn4f3fcf862c0f',
+            'X-RapidAPI-Key': 'e1c974e9dcmsha9f352e05da7a40p1dac8ejsn8e24321481cc',
             'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com'
         }
     };
@@ -141,72 +143,58 @@ function createElements(element) {
 }
 
 function streamingResults(data) {
-
+    console.log(data)
+    modal.innerHTML = ""
     // create modal elements
-    var mymodal = document.createElement('div');
     var modalContent = document.createElement('div');
     var close = document.createElement('span')
 
-    // append modal elements
-    document.body.append(mymodal);
-    mymodal.append(modalContent);
+     // append modal elements
+    // document.body.append(mymodal);
+    modal.append(modalContent);
     modalContent.append(close);
 
     // add classes and ids to elements
     close.classList.add('close');
-    mymodal.classList.add('modal');
+     // When the user clicks on <span> (x), close the modal
+    close.addEventListener("click", function (e) {
+        modal.style.display = "none";
+    })
     modalContent.classList.add('modal-content');
-    mymodal.setAttribute("id", "mymodal");
+   
     
 
-    // populate elements
-    close.textContent = '&times;'
+     // populate elements
+    close.textContent = 'x'
 
-    // populate modal with 3 modes of streaming
-    for (let i = 0; i < 4; i++) {
+     // populate modal with 3 modes of streaming
+    for (let i = 0; i < data.result.length; i++) {
         var serviceName = document.createElement('h2')
         // append elements
         modalContent.append(serviceName);
         serviceName.textContent = data.result[i].streamingInfo.us[i].service;
 
     }
-
-
-
 }
 
 resultBody.addEventListener('click', function (event) {
     var element = event.target;
-
-    var modal = document.querySelector('#myModal');
-    
-
     if (element.matches(".modalBTN")) {
+        streamingAvailabilityFetch(addedInfo)
         modal.style.display = "block";
     } else {
         modal.style.display = "none";
     }
-
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
+    
 })
-
 
 // event listener for search button
 searchBTN.addEventListener('click', search)
-
-
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener('click', function (e) {
+  
+    if (e.target == modal) {
+        modal.style.display = "none"
+    }
+})
 
