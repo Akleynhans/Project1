@@ -4,22 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+    <link
+    href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,700;1,200&display=swap"
+    rel="stylesheet"
+  />
+  
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Popping Movies</title>
 </head>
 
-<body>
+<body class="has-background-info">
     <nav></nav>
-    <header>
-        <h1>Popping Movies!</h1>
-        <span>Search for your favorite movies, and find where to watch them</span>
+    <header class="has-text-centered ">
+        <h1 class="is-size-1">POPPING MOVIES!</h1>
+        <span class="is-size-2">Search for your favorite movies, and find where to watch them!</span>
     </header>
     <!-- search input -->
-    <section class="column left" id="search">
+    <section class="is-flex is-flex-direction-column m-4" id="search">
         <!-- search bar and search history -->
-        <h2>Search for a Movie:</h2>
-        <input name="movie" id="searchInput" type="text" placeholder="Harry Potter">
-        <button id="searchBTN">Search</button>
+        <h2 class="ml-2">Search for a Movie:</h2>
+        <input class = "m-2" name="movie" id="searchInput" type="text" placeholder="Harry Potter">
+        <button class = "m-2" id="searchBTN">Search</button>
     </section>
     <!-- modal -->
     <div class="modal" id="streaming-modal"></div>
@@ -29,7 +37,7 @@
     </section>
 
     <!-- search results -->
-    <div id="searchBody">
+    <div class ="is-flex-direction-row is-flex-wrap-wrap is-justify-content-space-evenly columns" id="searchBody">
         <!-- img -->
         <!-- actors -->
         <!-- streaming locations -->

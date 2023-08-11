@@ -117,15 +117,26 @@ function createElements(element) {
 
     // create cards for results
     var resultCard = document.createElement('div');
-    resultCard.classList.add('card')
+    resultCard.classList.add('box')
+    resultCard.classList.add('is-flex')
+    resultCard.classList.add('is-flex-direction-column')
     resultBody.append(resultCard);
 
     // fill card
     var title = document.createElement('h2');
+    title.classList.add('m-2')
+    title.classList.add('has-text-weight-bold')
+    title.classList.add('is-size-5')
     var year = document.createElement('p');
+    year.classList.add('has-text-weight-bold')
+    year.classList.add('m-2')
     var type = document.createElement('p');
+    type.classList.add('has-text-weight-bold')
+    type.classList.add('m-2')
     var poster = document.createElement('img');
+    poster.classList.add('m-2')
     var modalBTN = document.createElement('button');
+    
 
     resultCard.append(title);
     resultCard.append(year);
@@ -135,7 +146,7 @@ function createElements(element) {
     modalBTN.classList.add('modalBTN')
 
     title.textContent = element.Title;
-    year.textContent = 'Year: ' + element.Year;
+    year.textContent = 'Release Year: ' + element.Year;
     type.textContent = 'Type: ' + element.Type;
     poster.src = element.Poster;
     modalBTN.textContent = 'Streaming Options';
