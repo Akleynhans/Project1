@@ -17,7 +17,7 @@ function search(event) {
 
     for (let i = 0; i < input.length; i++) {
 
-        if (i < 0) {
+        if (i > 1) {
             input[i] = '%20' + input[i];
         }
     }
@@ -45,6 +45,7 @@ function search(event) {
     searchHistoryContainer.prepend(buttonCreate);
     buttonCreate.setAttribute("data-movie", historyInput);
     buttonCreate.setAttribute("data-addedInfo", addedInfo);
+    buttonCreate.classList.add('m-2')
     buttonCreate.textContent = historyInput;
 
 }
@@ -74,7 +75,7 @@ function mbdFetch(addedInfo) {
             while (modal.firstChild) {
                 modal.removeChild(modal.firstChild);
             }
-            
+
             // get results to 10 elements
             if (data.Search.length > 10) {
                 while (data.Search.length > 10) {
@@ -87,7 +88,7 @@ function mbdFetch(addedInfo) {
             // go through array and get data
             resultsArray.forEach(element => {
                 createElements(element);
-                // searchstring(element);
+                
             });
 
         })
@@ -131,8 +132,8 @@ function streamingAvailabilityFetch(addedInfo) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data)
             streamingResults(data)
+            console.log(data)
         })
 
 }
@@ -148,12 +149,11 @@ function createElements(element) {
 
     // fill card
     var title = document.createElement('h2');
-    title.classList.add('m-1')
-    title.classList.add('has-text-weight-bold','is-size-7')
+    title.classList.add('has-text-weight-bold','is-size-6', 'm-1')
     var year = document.createElement('p');
-    year.classList.add('cardp', 'm-1')
+    year.classList.add('is-size-7', 'm-1')
     var type = document.createElement('p');
-    type.classList.add('cardp', 'm-1')
+    type.classList.add('is-size-7', 'm-1')
     var poster = document.createElement('img');
     poster.classList.add('m-1', 'poster')
     var modalBTN = document.createElement('button');
@@ -165,7 +165,21 @@ function createElements(element) {
     resultCard.append(poster);
     resultCard.append(modalBTN);
     modalBTN.classList.add('modalBTN')
+    // add data attribute to button to search for streaming options
+    
+    var movieTitle = element.Title.split(' ');
 
+    for (let i = 0; i < movieTitle.length; i++) {
+
+        if (i < 0) {
+            movieTitle[i] = '%20' + movieTitle[i];
+        }
+    }
+    var searchKey = movieTitle.toString();
+
+    modalBTN.setAttribute("data-searchKey", searchKey);
+
+    // populate cards
     title.textContent = element.Title;
     year.textContent = 'Release Year: ' + element.Year;
     type.textContent = 'Type: ' + element.Type;
@@ -175,52 +189,50 @@ function createElements(element) {
 }
 
 function streamingResults(data) {
-    console.log(data)
     modal.innerHTML = ""
     // create modal elements
     var modalContent = document.createElement('div');
-    var close = document.createElement('span')
 
     // append modal elements
-    // document.body.append(mymodal);
     modal.append(modalContent);
-    modalContent.append(close);
-
-    // add classes and ids to elements
-    close.classList.add('close');
-    // When the user clicks on <span> (x), close the modal
-    close.addEventListener("click", function (e) {
-        modal.style.display = "none";
-    })
     modalContent.classList.add('modal-content');
 
-    // populate elements
-    close.textContent = 'x'
 
     // for loop search for results
     // populate modal with 5 modes of streaming
     for (let i = 0; i < 6; i++) {
-        var serviceName = document.createElement('h2')
-        var streamingType = document.createElement('p')
-        var quality = document.createElement('p')
-        var link = document.createElement('p')
+        var modalStreamInfo = document.createElement('section');
+        modalStreamInfo.classList.add('is-flex', 'is-flex-direction-row', 'columns', 'borderbott')
+        var serviceName = document.createElement('h2');
+        serviceName.classList.add('is-uppercase', 'has-text-weight-bold', 'column', 'is-one')
+        var streamingType = document.createElement('p');
+        streamingType.classList.add('column', 'is-one');
+        var quality = document.createElement('p');
+        quality.classList.add('column', 'is-one');
+        var link = document.createElement('a');
+        link.classList.add('column', 'is-one');
         // append elements
-        modalContent.append(serviceName);
-        modalContent.append(streamingType);
-        modalContent.append(quality);
-        modalContent.append(link);
+        modalContent.append(modalStreamInfo);
+        modalStreamInfo.append(serviceName);
+        modalStreamInfo.append(streamingType);
+        modalStreamInfo.append(quality);
+        modalStreamInfo.append(link);
         // populate elements
         serviceName.textContent = data.result[0].streamingInfo.us[i].service;
-        streamingType.textContent = data.result[0].streamingInfo.us[i].streamingtype
-        quality.textContent = data.result[0].streamingInfo.us[i].quality
-        link.textContent = data.result[0].streamingInfo.us[i].link
+        streamingType.textContent ='Streaming Type: ' + data.result[0].streamingInfo.us[i].streamingType
+        quality.textContent = 'Quality: ' + data.result[0].streamingInfo.us[i].quality
+        link.href = data.result[0].streamingInfo.us[i].link
+        link.target = "_blank";
+        link.textContent = 'LINK'
     }
 }
 
 resultBody.addEventListener('click', function (event) {
     var element = event.target;
     if (element.matches(".modalBTN")) {
-        streamingAvailabilityFetch(addedInfo)
+        var searchKey = element.getAttribute("data-searchKey")
+        streamingAvailabilityFetch(searchKey)
+        console.log(searchKey)
         modal.style.display = "block";
     } else {
         modal.style.display = "none";
@@ -278,4 +290,5 @@ window.addEventListener('click', function (e) {
         modal.style.display = "none"
     }
 })
+
 

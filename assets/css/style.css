@@ -29,23 +29,8 @@
   /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
-  /* Could be more or less, depending on screen size */
-}
+  width: 50%;
 
-/* The Close Button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
 }
 
 header {
@@ -60,12 +45,11 @@ header {
   font-family: "Caprasimo", sans-serif;
 }
 
-h1,
 span {
 
   color: white;
-  font-size: 40px;
-  -webkit-text-stroke: 2px black;
+  
+  -webkit-text-stroke: 3px black;
 
 }
 
@@ -75,6 +59,12 @@ span {
   margin: 5px;
 }
 
-.cardp {
-  font-size: 0.6rem;
+.borderbott {
+  border-bottom: solid #aaa;
+}
+
+.titletext {
+  color: white;
+  font-size: 100px;
+  -webkit-text-stroke: 3px black;
 }
