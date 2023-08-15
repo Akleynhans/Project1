@@ -4,32 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Caprasimo">
+  
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Popping Movies</title>
 </head>
 
-<body>
+<body class="has-background-dark">
     <nav></nav>
-    <header>
-        <h1>Popping Movies!</h1>
-        <span>Search for your favorite movies, and find where to watch them</span>
+    <header class="is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
+        <h1 class ='titletext' >POPPING MOVIES!</h1>
+        <span class="is-size-1 has-text-centered m-2">Search for your favorite movies, and find where to watch them!</span>
     </header>
     <!-- search input -->
-    <section class="column left" id="search">
+    <h2 class="m-2 has-text-light">Search for Your Movie:</h2>
+    <section class="is-flex is-flex-direction-row" id="search">
         <!-- search bar and search history -->
-        <h2>Search for a Movie:</h2>
-        <input name="movie" id="searchInput" type="text" placeholder="Harry Potter">
-        <button id="searchBTN">Search</button>
+        <input class = "ml-2" name="movie" id="searchInput" type="text" placeholder="Harry Potter">
+        <button class = "ml-2" id="searchBTN">Search</button>
     </section>
     <!-- modal -->
     <div class="modal" id="streaming-modal"></div>
     <!-- container search history (clickable) -->
-    <section class="column right" id="searchHistory">
+    <h2 class = " mt-3 ml-2 has-text-light">Recent Searches:</h2>
+    <section class="m-2" id="searchHistory">
         <!-- js add recently searched -->
     </section>
 
     <!-- search results -->
-    <div id="searchBody">
+    <div class ="is-flex-direction-row is-flex-wrap-wrap is-justify-content-space-evenly columns mt-3" id="searchBody">
         <!-- img -->
         <!-- actors -->
         <!-- streaming locations -->
